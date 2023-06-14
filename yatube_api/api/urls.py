@@ -4,13 +4,15 @@ from django.urls import include, path
 from .views import CommentViewSet, GroupViewSet, PostViewSet
 
 
-router = routers.DefaultRouter()
-router.register('posts', PostViewSet, basename='posts')
-router.register('posts/(?P<post_id>\\d+)/comments', CommentViewSet,
-                basename='comments')
-router.register('groups', GroupViewSet, basename='groups')
+v1_router = routers.DefaultRouter()
+v1_router.register('posts', PostViewSet, basename='posts')
+v1_router.register(
+    'posts/(?P<post_id>\\d+)/comments', CommentViewSet,
+    basename='comments'
+)
+v1_router.register('groups', GroupViewSet, basename='groups')
 
 urlpatterns = [
     path('api-token-auth/', views.obtain_auth_token),
-    path('', include(router.urls)),
+    path('', include(v1_router.urls)),
 ]
